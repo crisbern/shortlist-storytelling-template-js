@@ -1810,42 +1810,35 @@ function buildPopup(feature, geometry, baseLayerClick)
 	
 	var contentDiv = $("<div></div>");
 	if (baseLayerClick && mobile)
-			$('#mobileSupportedLayersView').append($("<div style='padding-left: 20px;' class='mobileFeatureTitle'></div>").html(title));
+			$('#mobileSupportedLayersView').append("<div style='padding-left: 20px;' class='mobileFeatureTitle'>"+title+"</div>");
 	if (shortDesc) {
-		$(contentDiv).append($("<div class='description' tabindex='0'></div>").html(shortDesc));
+		$(contentDiv).append("<div class='description' tabindex='0'>"+shortDesc+"</div>");
 		if (baseLayerClick && mobile) {
-			$('#mobileSupportedLayersView').append($('<hr style="margin-left: 20px; margin-right: 20px;">'));
-			$('#mobileSupportedLayersView').append($("<div class='mobileFeatureSubtitle'></div>").html(shortDesc));
+			$('#mobileSupportedLayersView').append(['<hr style="margin-left: 20px; margin-right: 20px;">', "<div class='mobileFeatureSubtitle'>"+shortDesc+"</div>");
 		}
 	}
 	if (picture) {
-		var pDiv = $("<div></div>").addClass("infoWindowPictureDiv");
-		var mobilePDiv = $("<div></div>").addClass("mobilePictureDiv");
+		var pDiv = $("<div class='infoWindowPictureDiv'></div>");
+		var mobilePDiv = $("<div>"+mobilePictureDiv+"</div>");
+		var image = '<img src="'+picture+'"" alt=""/>':
+		
 		if (DETAILS_PANEL && !mobile) {
-			$(pDiv).append($(new Image()).attr("src", picture));
-			$(pDiv).css("cursor", "pointer");
+			pDiv.append(image);
+			pDiv.css("cursor", "pointer");
 		}
 		else if (DETAILS_PANEL && mobile) {
 			if (website) {
-				var mobileA = $("<a></a>").attr("href", website).attr("target","_blank");
-				$(mobileA).append($(new Image()).attr("src", picture));
-				$(mobilePDiv).append(mobileA);
+				mobilePDiv.append('<a href="'+website+'" target="_blank">'+image+'</a>');
 			} else {
-				$(mobilePDiv).append($(new Image()).attr("src", picture));
+				mobilePDiv.append(image);
 			}
 		} else { // no details panel
 			if (website) {
-				var a = $("<a tabindex='-1'></a>").attr("href", website).attr("target","_blank");
-				var mobileA = $("<a></a>").attr("href", website).attr("target","_blank");
-				var newImage = $(new Image()).attr("src", picture);
-				$(newImage).attr('alt', '');
-				$(a).append($(newImage));
-				$(mobileA).append($(new Image()).attr("src", picture));
-				$(pDiv).append(a);
-				$(mobilePDiv).append(mobileA);
+				pDiv.append('<a tabindex="-1" href="'+website+'" target="_blank">'+image+'</a>');
+				mobilePDiv.append('<a href="'+website+'" target="_blank">'+image+'</a>');
 			} else {
-				$(pDiv).append($(new Image()).attr("src", picture));
-				$(mobilePDiv).append($(new Image()).attr("src", picture));
+				pDiv.append(image);
+				mobilePDiv.append(image);
 			}
 		}
 		$(contentDiv).append(pDiv);
@@ -1861,25 +1854,25 @@ function buildPopup(feature, geometry, baseLayerClick)
 	
 	if (!DETAILS_PANEL) {
 		if(!shortDesc)
-			$('.mobileFeatureTitle').after($('<hr style="margin-left: 20px; margin-right: 20px;">'));
+			$('.mobileFeatureTitle').after('<hr style="margin-left: 20px; margin-right: 20px;">');
 		var desc1 = atts.getValueCI(FIELDNAME_DESC1);
 		if (desc1) {
-			$(contentDiv).append($("<div class='description' tabindex='0'></div>").html(desc1));
+			$(contentDiv).append('<div class="description" tabindex="0">'+desc1+'</div>');
 			if(baseLayerClick)
-				$('#mobileSupportedLayersView').append($("<div class='mobileFeatureDesc'></div>").html(desc1));
+				$('#mobileSupportedLayersView').append('<div class="mobileFeatureDesc">'+desc1+'</div>');
 		}
 		
 		if (website) {
-			$(contentDiv).append($('<div class="address"><a href="'+website+'" target="_blank">Website</a></div>').css("padding-top", 10));
+			$(contentDiv).append('<div class="address"><a href="'+website+'" target="_blank">Website</a></div>').css("padding-top", 10));
 			if(baseLayerClick && mobile)
-				$('#mobileSupportedLayersView').append($('<div class="mobileFeatureAddress"><a href="'+website+'" target="_blank">Website</a></div>').css("padding-top", 10));
+				$('#mobileSupportedLayersView').append('<div class="mobileFeatureAddress"><a href="'+website+'" target="_blank">Website</a></div>').css("padding-top", 10));
 		}
 		
 	}
 	else if (DETAILS_PANEL && mobile){
-		$(contentDiv).prepend($('<div style="margin-left: -50px" class="mobileFeatureTitle" tabindex="0">'+title+'</div>'));
+		$(contentDiv).prepend('<div style="margin-left: -50px" class="mobileFeatureTitle" tabindex="0">'+title+'</div>');
 		if(!shortDesc)
-			$('.mobileFeatureTitle').after($('<hr style="margin-left: 20px; margin-right: 20px;">'));
+			$('.mobileFeatureTitle').after('<hr style="margin-left: 20px; margin-right: 20px;">');
 
 		var descFields = [FIELDNAME_DESC1, FIELDNAME_DESC2, FIELDNAME_DESC3, FIELDNAME_DESC4, FIELDNAME_DESC5];
 		var value;
@@ -1897,23 +1890,23 @@ function buildPopup(feature, geometry, baseLayerClick)
 					$('#mobileSupportedLayersView').append('<p>');
 			}
 		});
-		$(contentDiv).append($('<hr style="margin-left: 20px; margin-right: 20px;">'));
+		$(contentDiv).append('<hr style="margin-left: 20px; margin-right: 20px;">');
 		if(baseLayerClick && mobile){
-			$('#mobileSupportedLayersView').append($('<hr style="margin-left: 20px; margin-right: 20px;">'));
+			$('#mobileSupportedLayersView').append('<hr style="margin-left: 20px; margin-right: 20px;">');
 		}
 		var address = atts.getValueCI(FIELDNAME_ADDRESS);
 		if (address) {
-			$(contentDiv).append($('<div class="mobileFeatureAddress" tabindex="0">'+address+'</div>')); 
+			$(contentDiv).append('<div class="mobileFeatureAddress" tabindex="0">'+address+'</div>'); 
 			if(baseLayerClick && mobile){
-				$('#mobileSupportedLayersView').append($('<div class="mobileFeatureAddress">'+address+'</div>')); 
+				$('#mobileSupportedLayersView').append('<div class="mobileFeatureAddress">'+address+'</div>'); 
 			}
 		}
 	
 		var hours = atts.getValueCI(FIELDNAME_HOURS);
 		if (hours) {
-			$(contentDiv).append($('<div class="mobileFeatureAddress" tabindex="0">'+hours+'</div>')); 
+			$(contentDiv).append('<div class="mobileFeatureAddress" tabindex="0">'+hours+'</div>'); 
 			if(baseLayerClick && mobile){
-				$('#mobileSupportedLayersView').append($('<div class="mobileFeatureAddress">'+hours+'</div>')); 
+				$('#mobileSupportedLayersView').append('<div class="mobileFeatureAddress">'+hours+'</div>'); 
 			}
 		}
 	  
@@ -1929,7 +1922,7 @@ function buildPopup(feature, geometry, baseLayerClick)
 			$('#mobileSupportedLayersView').append('<div style="margin-bottom: 20px;"></div>');
 		}
 	} else {
-		$(contentDiv).append($("<div></div>").addClass("infoWindowLink").attr("tabindex","0").html("Details"));
+		$(contentDiv).append('<div class="infoWindowLink" tabindex="0" >Details</div>');
 		
 	}
 
@@ -1939,7 +1932,7 @@ function buildPopup(feature, geometry, baseLayerClick)
 	//       there's got to be a more elegant way to do this, but it
 	//       eludes me at the moment. 
 	_map.infoWindow.setContent("<div>"+contentDiv.html()+"</div>");
-	$('.infoWindowLink').last().append($("<span aria-hidden='true' ></span>").html(">>"));
+	$('.infoWindowLink').last().append("<span aria-hidden='true' >&gt;&gt;/span>");
 	_map.infoWindow.setTitle(title);
 	_map.infoWindow.show(geometry);
 	
@@ -1995,19 +1988,18 @@ function buildMobileSlideView(featureNumber){
 		
 		var num = $('<div class="mobileFeatureNum" style="background-color:'+_layerCurrent.color+'">'+ atts.getValueCI(FIELDNAME_NUMBER)+'</div>');
 	
-		var mobileContentDiv = $("<div'></div");
+		var mobileContentDiv = $("<div></div");
 		$(mobileContentDiv).append(num);
 		if(title){
-			$(mobileContentDiv).append($("<div class='mobileFeatureTitle'></div>").html(title));
+			$(mobileContentDiv).append("<div class='mobileFeatureTitle'>"+title+"</div>");
 		}
 		$(mobileContentDiv).append("<hr style='margin-left: 20px; margin-right: 20px;'>");
 
 		if (shortDesc) {
-			$(mobileContentDiv).append($("<div class='mobileFeatureSubtitle'></div>").html(shortDesc));
+			$(mobileContentDiv).append("<div class='mobileFeatureSubtitle'>"+shortDesc+"</div>");
 		}
 		if (picture) {
-			var mobilePDiv = $("<div></div>").addClass("mobilePictureDiv");
-			$(mobilePDiv).append($(new Image()).attr("src", picture));
+			var mobilePDiv = $("<div class='mobilePictureDiv'><img src='"+picture+"'/></div>");
 			
 			$(mobileContentDiv).append(mobilePDiv);
 		}
@@ -2015,11 +2007,11 @@ function buildMobileSlideView(featureNumber){
 		if (!DETAILS_PANEL) {
 			var desc1 = atts.getValueCI(FIELDNAME_DESC1);
 			if (desc1) {
-				$(mobileContentDiv).append($("<div class='mobileFeatureDesc'></div>").html(desc1));
+				$(mobileContentDiv).append("<div class='mobileFeatureDesc'>"+desc1+"</div>");
 			}
 			
 			if (website) {
-				$(mobileContentDiv).append($('<div class="mobileFeatureDesc"><a href="'+website+'" target="_blank">Website</a></div>').css("padding-top", 10));
+				$(mobileContentDiv).append('<div class="mobileFeatureDesc"><a href="'+website+'" target="_blank">Website</a></div>').css("padding-top", 10));
 			}
 			
 		} else {
@@ -2037,12 +2029,12 @@ function buildMobileSlideView(featureNumber){
 			$(mobileContentDiv).append("<hr style='margin-left: 20px; margin-right: 20px;'>");
 			var address = atts.getValueCI(FIELDNAME_ADDRESS);
 			if (address) {
-				$(mobileContentDiv).append($('<div class="mobileFeatureAddress">'+address+'</div>')); 
+				$(mobileContentDiv).append('<div class="mobileFeatureAddress">'+address+'</div>'); 
 			}
 		
 			var hours = atts.getValueCI(FIELDNAME_HOURS);
 			if (hours) {
-				$(mobileContentDiv).append($('<div class="mobileFeatureAddress">'+hours+'</div>')); 
+				$(mobileContentDiv).append('<div class="mobileFeatureAddress">'+hours+'</div>'); 
 			}
 		  
 			var website = prependURLHTTP(atts.getValueCI(FIELDNAME_WEBSITE));
@@ -2088,12 +2080,12 @@ function showDetails(graphic, e) {
   
 	var address = graphic.attributes.getValueCI(FIELDNAME_ADDRESS);
 	if (address) {
-		$(leftDiv).append($('<div class="address" tabindex="0">'+address+'</div>')); 
+		$(leftDiv).append('<div class="address" tabindex="0">'+address+'</div>'); 
 	}
 
 	var hours = graphic.attributes.getValueCI(FIELDNAME_HOURS);
 	if (hours) {
-		$(leftDiv).append($('<div class="address" tabindex="0">'+hours+'</div>')); 
+		$(leftDiv).append('<div class="address" tabindex="0">'+hours+'</div>'); 
 	}
   
 	var website = prependURLHTTP(graphic.attributes.getValueCI(FIELDNAME_WEBSITE));
